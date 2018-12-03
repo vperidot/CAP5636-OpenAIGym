@@ -16,7 +16,7 @@ A* search is a type of informed search and is useful for searching a weighted gr
 
 ## Minimax
 
-## \alpha - \beta pruning
+## alpha-beta pruning
 
 ## Expectimax
 
