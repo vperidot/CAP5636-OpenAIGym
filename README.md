@@ -33,16 +33,28 @@ A Markov model is made up of a set of states, actions, a transition function, re
 ### Bellman Updates
 The Bellman update starts with the current set of values (V, Q, Pi) over a given domain. An iterative update is made to each value, propagating the maximum expected value (based on the current set of values). In all the Iteration algorithms below, a discount is applied to future rewards when calculating expected value to account for uncertain outcomes (i.e. a reward now is better than a reward later).
 
-### Value Iteration
-Value iteration applies the Bellman update to V(s)->(Real Number), the expected value of each state.
+**Value Iteration**: Value iteration applies the Bellman update to V(s)->(Real Number), the expected value of each state.
 
-### Q-value Iteration
-Q-value Iteration applies the Bellman update to the maximum expected value of each state/action pair, Q(s,a)->(Real Number).
+**Q-value Iteration**: Q-value Iteration applies the Bellman update to the maximum expected value of each state/action pair, Q(s,a)->(Real Number).
 
-### Policy Iteration
-Policy Iteration applies the Bellman update to the policy Pi(s)->a. Instead of the maximum expected value, the update supplies the argmax of the expected value, or the action that produces the maximum expected value.
+**Policy Iteration**: Policy Iteration applies the Bellman update to the policy Pi(s)->a. Instead of the maximum expected value, the update supplies the argmax of the expected value, or the action that produces the maximum expected value.
 
 ## Reinforcement Learning
 
+### Model-based vs Model-Free
 
+**Model-based Reinforcement Learning** treats the task at hand like a Markov Decsion Process where the trasition probabilities (T) and rewards (R) are unknown. The agent takes actions and attempts to "fill in" T and R. It can then extract an "optimal" policy using an iterative techique like the ones above.
 
+**Model-Free Reinforcement Learning** stores pertinent information (e.g. about state and expected payouts) and takes action based on these without attempting to create a model of the entire environment.
+
+### Direct Evaluation
+The actor keeps track of a policy and the average (discounted) reward resulting from visiting that state, V(s). At the end of each episode, average rewards are updated. Direct evaluation does not provide a mechanism for leveraging information about connections between states.
+
+### Temporal Difference Learning
+Instead of updating at the end of each episode, the vaue of each state V(s) is updated after each transition. TD Learning solves the problem of extracting information from the relationships between states because the most likely successor state s' will more frequently affect the update of state s.
+
+### Q-learning
+
+Q-learning is an online learning algorithm, meaning the agent does not make "trial runs" to collect information before acting, but rather collects information as it acts. Instead of tracking the value V of each state, Q-learning tracks Q(s,a) of state-action pairs. After each action a from state s, Q(s,a) is updated with the new reward information. Changes to Q(s,a) are weighted by a learning rate alpha. Q-learning converges to an optimal policy, even if the agent is acting suboptimally.
+
+**Epsilon-greedy**: In order to efficiently explore the entire state space, a tradeoff between exploiting known advantageous paths and exploring unknown paths must be made. Epsilon-greedy is a Q-learning serch strategy in which the agent acts randomly with a small probability epsilon, and otherwise acts optimally according to the Q-values it has learned so far. In order to avoid random thrashing after convergence, epsilon can be decreased over time.
